@@ -40,7 +40,7 @@ public class Jalta extends JFrame {
 	/**
 	 * Create the frame.
 	 */
-	public Jalta() {
+	private Jalta() {
 		setTitle("Alta curso");
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		setBounds(100, 100, 450, 300);

@@ -14,17 +14,18 @@ import beans.Curso;
 import beans.Evaluacion;
 import beans.Examen;
 import beans.HistoricoNotas;
+import beans.Respuesta;
 import utilidades.Tools;
 
 public class GestionAlumno {
 	
 	public int evaluarTest(Alumno a , Curso c, Examen e) {
 		int nota=0;
-		Examen res=Tools.buscarExamen(c.getNombreCurso());
-	
+		Examen examen=Tools.buscarExamen(c.getNombreCurso());
+		Respuesta resp=Tools.buscarRespuestas(c.getNombreCurso()) ;
 		
-		for (int i=0; i<e.getPreguntas().length; i++) {
-			if (res.getRespuestas()[i].equals(e.getRespuestas()[i])) {
+		for (int i=0; i<examen.getPreguntas().length; i++) {
+			if (examen.getRespuestas()[i].equals(resp.getRespuestas()[i])) {
 				nota++;
 		    }
 		}
@@ -53,12 +54,18 @@ public class GestionAlumno {
 		Alumno a= Tools.buscarAlumno(dni);
 		try (Connection cn=DriverManager.getConnection("jdbc:mysql://localhost:3306/academias", "root", "root"))
 		{
-			 Statement st=cn.createStatement();
-			String sql="select * from Evaluacion where idCurso='"+ c.getIdCurso() +"' and dni='" + a.getDni() +"'";
-			ResultSet rs=st.executeQuery(sql);
+			
+			String sql="select * from Evaluacion where nombreCurso=? and dni=?";
+			
+			PreparedStatement ps = cn.prepareStatement(sql);
+			ps.setString(1,nombreCurso);
+			ps.setInt(2,dni);
+			
+			ResultSet rs=ps.executeQuery();
 			//No necesitamos converison de fechas sql a util.date ya que hay asignacion directa por herdar sql de date.
-			if (rs.next())
+			while (rs.next()) {
 				e=new Evaluacion(rs.getInt("dni"),rs.getInt(c.getNombreCurso()),rs.getInt("nota"));
+			}
 						
 		}catch(SQLException ex) {
 			ex.printStackTrace();
@@ -87,26 +94,32 @@ public class GestionAlumno {
     	return cursos;
     }
     
-    public List<Curso> listadoCursosAlumno(int dni){
+    public List<HistoricoNotas> listadoCursosAlumno(int dni){
+    	
+    	ArrayList<HistoricoNotas> cursos=null;
     	Alumno a=Tools.buscarAlumno(dni);
-    	ArrayList<Curso> cursos=new ArrayList<>();
-    	try (Connection cn=DriverManager.getConnection("jdbc:mysql://localhost:3306/academias", "root", "root"))
-		{
-			 Statement st=cn.createStatement();
-			String sql="select * from Evaluacion where dni='" + a.getDni() +"'";
-			ResultSet rs=st.executeQuery(sql);
-			while (rs.next()) {
-				Curso c=Tools.buscarCurso(rs.getInt("idCurso"));
-				cursos.add(c);
-			}		
-						
-		}catch(SQLException ex) {
-			ex.printStackTrace();
-		}
-    	return cursos;
-    }
-    
-   
+    	if (a!=null) {
+	    	try (Connection cn=DriverManager.getConnection("jdbc:mysql://localhost:3306/academias", "root", "root")){
+	    		String sql="select m.dniAlumno,c.nombreCurso,fechainicio,fechaFin,e.nota from" + 
+	    				" curso c left join (matriculas m  , evaluacion e)" + 
+	    				" on  (m.nombreCurso=c.nombreCurso and c.idCurso=e.idCurso and m.dniAlumno=?" + 
+	    				" and e.dni=?)";
+				PreparedStatement ps = cn.prepareStatement(sql);
+				ps.setInt(1,dni);
+				ps.setInt(2,dni);
+	    		ResultSet rs=ps.executeQuery();
+	    	    cursos=new ArrayList<>();
+				while (rs.next()) {
+					cursos.add(new HistoricoNotas(rs.getString("nombreCurso"),rs.getDate("fechaInicio"),
+							rs.getDate("fechaFin"),rs.getInt("nota")));
+				}		
+							
+			}catch(SQLException ex) {
+				ex.printStackTrace();
+			}
+      }
+      	   return cursos;
+    }  
 }
 
 

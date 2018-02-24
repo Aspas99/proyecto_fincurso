@@ -25,7 +25,7 @@ public class Jlogin extends JFrame {
 	/**
 	 * Create the frame.
 	 */
-	public Jlogin() {
+	private Jlogin() {
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		setBounds(100, 100, 450, 300);
 		contentPane = new JPanel();

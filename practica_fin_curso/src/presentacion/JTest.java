@@ -10,6 +10,7 @@ import javax.swing.border.EmptyBorder;
 import beans.Alumno;
 import beans.Curso;
 import beans.Examen;
+import beans.Respuesta;
 import modelo.GestionAlumno;
 
 import javax.swing.JLabel;
@@ -28,12 +29,16 @@ public class JTest extends JFrame {
 	private JPanel contentPane;
 	private int respuestaok;
 	private int respuesta[]= new int[5];
-
-
+	private int pregunta;
+	private static String respuestasExamen[];
+	static
+	{
+		respuestasExamen= new String[5];
+	}
 	/**
 	 * Create the frame.
 	 */
-	public JTest(Alumno a, Curso c,Examen e,int pregunta) {
+	private JTest(Alumno a, Curso c,Examen e,Respuesta r) {
 		setTitle("Q&A pregunta");
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		setBounds(100, 100, 450, 300);
@@ -42,84 +47,114 @@ public class JTest extends JFrame {
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
 		
-		JLabel lblPregunta = new JLabel(e.getPreguntas()[pregunta]);
-		lblPregunta.setBounds(10, 34, 73, 14);
-		contentPane.add(lblPregunta);
-		//Se crean los radio button de las respuestas ,inicialmente con una respuesta aleatoria 
-		//y nos aseguramos que ninguna corresponde a la correcta para evitar dos opciones iguales
-		//con la respuesta 
-		JTextPane textPane = new JTextPane();
-		textPane.setBounds(93, 11, 308, 65);
-		contentPane.add(textPane);
-		int i=0;
-		boolean completo =false;
-		while (i<5 && !completo) {
-			respuesta[i]=(int) Math.floor(Math.random()*e.getRespuestas().length+1);
-			if (respuesta[i]==pregunta ) {
-				respuesta[i]=(int) Math.floor(Math.random()*e.getRespuestas().length+1);
-			}
-			
-			if (++i == 5) completo=true;
-		}
-		
-		JRadioButton rdbtnRespuesta1 = new JRadioButton(e.getRespuestas()[respuesta[0]]);
-		rdbtnRespuesta1.setBounds(10, 86, 148, 23);
-		contentPane.add(rdbtnRespuesta1);
-		
-		JRadioButton rdbtnRespuesta2 = new JRadioButton(e.getRespuestas()[respuesta[1]]);
-		rdbtnRespuesta2.setBounds(10, 112, 148, 23);
-		contentPane.add(rdbtnRespuesta2);
-		
-		JRadioButton rdbtnRespuesta3 = new JRadioButton(e.getRespuestas()[respuesta[2]]);
-		rdbtnRespuesta3.setBounds(10, 138, 148, 23);
-		contentPane.add(rdbtnRespuesta3);
-		
-		JRadioButton rdbtnRespuesta4 = new JRadioButton(e.getRespuestas()[respuesta[3]]);
-		rdbtnRespuesta4.setBounds(10, 164, 148, 23);
-		contentPane.add(rdbtnRespuesta4);
-		
-		JRadioButton rdbtnRespuesta5 = new JRadioButton(e.getRespuestas()[respuesta[4]]);
-		rdbtnRespuesta5.setBounds(10, 190, 148, 23);
-		contentPane.add(rdbtnRespuesta5);
-		respuestaok=(int)( Math.floor(Math.random()*5+1));
-		
-		
-		switch (respuestaok) {
-		case 1:rdbtnRespuesta1.setText(e.getRespuestas()[pregunta]);
-			break;
-		case 2:rdbtnRespuesta2.setText(e.getRespuestas()[pregunta]);
-			break;
-		case 3:rdbtnRespuesta3.setText(e.getRespuestas()[pregunta]);
-			break;
-		case 4:rdbtnRespuesta4.setText(e.getRespuestas()[pregunta]);
-			break;
-		case 5:rdbtnRespuesta5.setText(e.getRespuestas()[pregunta]);
-			break;
-		}
-		
-		JLabel lblNota = new JLabel("");
-		lblNota.setBounds(289, 231, 46, 14);
-		contentPane.add(lblNota);
-		
-		JButton btnEvaluar = new JButton("Evaluar");
-		btnEvaluar.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent arg0) {
-				galumno=new GestionAlumno();
-				int nota=galumno.evaluarTest(a, c, e);
+		//3do {
+					//Se pone en el lblPregunta la pregunta correspondiente a la tabla de preguntas almacenada en bbdd ,posicion 1 a 5
+				JLabel lblPregunta = new JLabel("Pregunta numero " + (pregunta +1));
+				lblPregunta.setBounds(10, 34, 137, 14);
+				contentPane.add(lblPregunta);
+				//Se crean los radio button de las respuestas ,inicialmente con una respuesta aleatoria 
+				//y nos aseguramos que ninguna corresponde a la correcta para evitar dos opciones iguales
+				//con la respuesta 
+				JTextPane textPane = new JTextPane();
+				textPane.setBounds(157, 11, 277, 65);
+				contentPane.add(textPane);
+				System.out.println(e.getPreguntas()[pregunta]);
+				textPane.setText(e.getPreguntas()[pregunta]);
+				int i=0;
+				boolean completo =false;
+				while (i<5 && !completo) {
+					respuesta[i]=(int) Math.floor(Math.random()*r.getRespuestas().length);
+					if (respuesta[i]==pregunta ) {
+						respuesta[i]=(int) Math.floor(Math.random()*r.getRespuestas().length);
+					}
+					
+					if (++i == 5) completo=true;
+				}
+				//Aqui marcamos las 5 posibles respuestas 
 				
-			}
-		});
-		btnEvaluar.setBounds(162, 227, 89, 23);
-		contentPane.add(btnEvaluar);
-		
-		
+				JRadioButton rdbtnRespuesta1 = new JRadioButton(r.getRespuestas()[respuesta[0]]);
+				rdbtnRespuesta1.setBounds(10, 86, 148, 23);
+				contentPane.add(rdbtnRespuesta1);
+				
+				JRadioButton rdbtnRespuesta2 = new JRadioButton(r.getRespuestas()[respuesta[1]]);
+				rdbtnRespuesta2.setBounds(10, 112, 148, 23);
+				contentPane.add(rdbtnRespuesta2);
+				
+				JRadioButton rdbtnRespuesta3 = new JRadioButton(r.getRespuestas()[respuesta[2]]);
+				rdbtnRespuesta3.setBounds(10, 138, 148, 23);
+				contentPane.add(rdbtnRespuesta3);
+				
+				JRadioButton rdbtnRespuesta4 = new JRadioButton(r.getRespuestas()[respuesta[3]]);
+				rdbtnRespuesta4.setBounds(10, 164, 148, 23);
+				contentPane.add(rdbtnRespuesta4);
+				
+				JRadioButton rdbtnRespuesta5 = new JRadioButton(r.getRespuestas()[respuesta[4]]);
+				rdbtnRespuesta5.setBounds(10, 190, 148, 23);
+				contentPane.add(rdbtnRespuesta5);
+				respuestaok=(int)( Math.floor(Math.random()*5+1));
+				
+				
+				switch (respuestaok) {
+				case 1:rdbtnRespuesta1.setText(r.getRespuestas()[pregunta]);
+					break;
+				case 2:rdbtnRespuesta2.setText(r.getRespuestas()[pregunta]);
+					break;
+				case 3:rdbtnRespuesta3.setText(r.getRespuestas()[pregunta]);
+					break;
+				case 4:rdbtnRespuesta4.setText(r.getRespuestas()[pregunta]);
+					break;
+				case 5:rdbtnRespuesta5.setText(r.getRespuestas()[pregunta]);
+					break;
+				}
+				
+				
+				//}
+				JButton btnSiguiente = new JButton("Siguiente pregunta");
+				btnSiguiente.addActionListener(new ActionListener() {
+					public void actionPerformed(ActionEvent arg0) {
+						int marcado= rdbtnRespuesta1.isSelected()?0:rdbtnRespuesta2.isSelected()?1:rdbtnRespuesta3.isSelected()?2:rdbtnRespuesta4.isSelected()?3:rdbtnRespuesta5.isSelected()?5:0;
+						
+						switch (marcado) {
+							case 0:
+								respuestasExamen[pregunta]=rdbtnRespuesta1.getText();
+								break;
+							case 1:
+								respuestasExamen[pregunta]=rdbtnRespuesta2.getText();
+								break;
+							case 2:
+								respuestasExamen[pregunta]=rdbtnRespuesta3.getText();
+								break;
+							case 3:
+								respuestasExamen[pregunta]=rdbtnRespuesta4.getText();
+								break;
+							case 5:
+								respuestasExamen[pregunta]=rdbtnRespuesta5.getText();
+								break;
+						}
+						
+						pregunta++; 
+						if (pregunta<5) {
+							JTest jtest = new JTest(a,c,e,r);
+							jvc.setVisible(false);
+						}else {
+							e.setRespuestas(respuestasExamen);
+							JLabel lblNota = new JLabel("");
+							lblNota.setBounds(289, 231, 46, 14);
+							lblNota.setText("La nota que ha conseguido en el examen es :" + galumno.evaluarTest(a, c, e));
+							contentPane.add(lblNota);
+						}
+					}
+				
+				btnSiguiente.setBounds(162, 227, 89, 23);
+				contentPane.add(btnSiguiente);
+				}
 	}
 	
-    public static JTest nuevaVentanaTest(Alumno a, Curso c,Examen e,int p) { //El método que crea 
+    public static JTest nuevaVentanaTest(Alumno a, Curso c,Examen e,Respuesta r) { //El método que crea 
 		
 		if (jvc==null) { //si el obj no existe o no ha sido creado :solo hay un objeto prvate y static ,es decir ambito de clase 
 						// y static ,es decir que se comparte por todas las instancias
-			jvc=new JTest(a,c,e,p);
+			jvc=new JTest(a,c,e,r);
 			
 		}
 		return jvc;

@@ -10,6 +10,7 @@ import javax.swing.border.EmptyBorder;
 import beans.Alumno;
 import beans.Curso;
 import beans.Examen;
+import utilidades.Tools;
 
 import javax.swing.JTextArea;
 import javax.swing.JButton;
@@ -30,7 +31,7 @@ public class Jexamen extends JFrame {
 	/**
 	 * Create the frame.
 	 */
-	public Jexamen(Alumno a,Curso c,Examen e) {
+	private Jexamen(Alumno a,Curso c,Examen e) {
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		setBounds(100, 100, 450, 300);
 		contentPane = new JPanel();
@@ -46,7 +47,8 @@ public class Jexamen extends JFrame {
 		JButton btnComenzarTest = new JButton("Comenzar test");
 		btnComenzarTest.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				
+				JTest jvc = JTest.nuevaVentanaTest(a, c, e, Tools.buscarRespuestas(c.getNombreCurso()));
+				jvc.setVisible(true);
 				
 			}
 		});

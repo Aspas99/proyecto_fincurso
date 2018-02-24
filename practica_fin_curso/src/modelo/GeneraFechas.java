@@ -5,6 +5,7 @@ import java.sql.Date;
 
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -22,7 +23,6 @@ public class GeneraFechas {
 			date=year +"-" +(i<10?"0"+i:i)+"-01";
 			fecha=LocalDate.parse(date);
 			fechas.add(Date.valueOf(fecha));
-			System.out.println("La fecha generada para el alta de cursos es:" + fecha);
 		}
 	}
 	

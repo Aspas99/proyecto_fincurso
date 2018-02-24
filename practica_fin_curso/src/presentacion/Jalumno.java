@@ -32,7 +32,7 @@ public class Jalumno extends JFrame {
 	/**
 	 * Create the frame.
 	 */
-	public Jalumno(Alumno a) {
+	private Jalumno(Alumno a) {
 		setTitle("Bienvenido alumno");
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		setBounds(100, 100, 450, 300);
@@ -51,8 +51,8 @@ public class Jalumno extends JFrame {
 		JButton btnMisCursos = new JButton("Mis Cursos");
 		btnMisCursos.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				GestionAdmin gadmin = new GestionAdmin();
-				gadmin.recuperaCursosActivos(a);
+				JMisCursos jmc = JMisCursos.nuevaVentanaMisCursos(alumno);
+				jmc.setVisible(true);
 			}
 		});
 		btnMisCursos.setBounds(10, 29, 89, 23);
@@ -65,7 +65,7 @@ public class Jalumno extends JFrame {
 		cmboxCursosActivos.addFocusListener(new FocusAdapter() {
 			@Override
 			public void focusGained(FocusEvent arg0) {
-				GestionAdmin gadmin=new GestionAdmin();
+				GestionAdmin gadmin=new GestionAdmin();//idea sumar cursos con examen + crusos sin examen por alumno en este metodo en una sola lista
 				 adp=new presentacion.adaptadores.AdaptadorListaComboCursos(gadmin.recuperaCursosActivos(a));
 				 cmboxCursosActivos.setModel(adp);
 			}
@@ -77,7 +77,11 @@ public class Jalumno extends JFrame {
 				GestionAdmin admin = new GestionAdmin();
 			    c=(Curso)cmboxCursosActivos.getSelectedItem();
 			    examen = Tools.buscarExamen(c.getNombreCurso());
+			    System.out.println("El valor del examen seleccionado es: " + examen.getPreguntas()[0]);
+			    System.out.println("El valor del examen seleccionado es: " + examen.getPreguntas()[1]);
 				Jexamen jvc = Jexamen.nuevaVentanaExamen(a, c, examen);
+				jvc.setVisible(true);
+				
 			}
 		});
 		btnRealizarTest.setBounds(10, 133, 105, 23);
