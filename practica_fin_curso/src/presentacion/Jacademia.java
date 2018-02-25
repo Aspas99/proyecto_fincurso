@@ -10,6 +10,7 @@ import javax.swing.JLabel;
 import javax.swing.JButton;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
+import java.awt.Font;
 
 public class Jacademia extends JFrame {
 
@@ -43,10 +44,12 @@ public class Jacademia extends JFrame {
 		contentPane.setLayout(null);
 		
 		JLabel lblNewLabel = new JLabel("Bienvenido a la aplicacion,escoja su perfil");
+		lblNewLabel.setFont(new Font("Tahoma", Font.PLAIN, 11));
 		lblNewLabel.setBounds(107, 11, 205, 78);
 		contentPane.add(lblNewLabel);
 		
 		JButton btnAdministracion = new JButton("Administracion");
+		btnAdministracion.setFont(new Font("Tahoma", Font.PLAIN, 11));
 		btnAdministracion.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				Jadministracion jvc=Jadministracion.nuevaVentanaAdministracion();
@@ -57,6 +60,7 @@ public class Jacademia extends JFrame {
 		contentPane.add(btnAdministracion);
 		
 		JButton btnAlumno = new JButton("Alumno");
+		btnAlumno.setFont(new Font("Tahoma", Font.PLAIN, 11));
 		btnAlumno.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				Jlogin jvc = Jlogin.nuevaVentanaLogin();	

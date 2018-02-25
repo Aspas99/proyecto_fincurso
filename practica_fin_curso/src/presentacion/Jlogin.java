@@ -34,7 +34,7 @@ public class Jlogin extends JFrame {
 		contentPane.setLayout(null);
 		
 		txtDni = new JTextField();
-		txtDni.setBounds(73, 38, 159, 20);
+		txtDni.setBounds(109, 38, 159, 20);
 		contentPane.add(txtDni);
 		txtDni.setColumns(10);
 		

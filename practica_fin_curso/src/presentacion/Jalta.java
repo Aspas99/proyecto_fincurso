@@ -28,6 +28,7 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.awt.event.ActionEvent;
 import java.awt.event.FocusAdapter;
+import java.awt.Font;
 
 public class Jalta extends JFrame {
     private static Jalta jvc;
@@ -107,6 +108,7 @@ public class Jalta extends JFrame {
 		});
 		
 		JButton btnGuardarCurso = new JButton("Guardar Curso");
+		btnGuardarCurso.setFont(new Font("Tahoma", Font.PLAIN, 11));
 		btnGuardarCurso.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				Date d1=(Date)comboBoxFechaIni.getSelectedItem();
@@ -121,7 +123,7 @@ public class Jalta extends JFrame {
 				}
 			}
 		});
-		btnGuardarCurso.setBounds(269, 184, 103, 23);
+		btnGuardarCurso.setBounds(269, 184, 136, 23);
 		contentPane.add(btnGuardarCurso);
 	
 	}

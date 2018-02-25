@@ -18,6 +18,7 @@ import beans.Examen;
 import modelo.GestionAdmin;
 import presentacion.adaptadores.AdaptadorListaComboCursos;
 import utilidades.Tools;
+import java.awt.Font;
 
 public class Jalumno extends JFrame {
 
@@ -45,10 +46,12 @@ public class Jalumno extends JFrame {
 		
 		
 		JLabel lblCursosDisponibles = new JLabel("Cursos Disponibles");
+		lblCursosDisponibles.setFont(new Font("Tahoma", Font.PLAIN, 11));
 		lblCursosDisponibles.setBounds(10, 63, 121, 14);
 		contentPane.add(lblCursosDisponibles);
 		
 		JButton btnMisCursos = new JButton("Mis Cursos");
+		btnMisCursos.setFont(new Font("Tahoma", Font.PLAIN, 11));
 		btnMisCursos.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				JMisCursos jmc = JMisCursos.nuevaVentanaMisCursos(alumno);
@@ -59,6 +62,7 @@ public class Jalumno extends JFrame {
 		contentPane.add(btnMisCursos);
 		
 		JComboBox <Curso> cmboxCursosActivos = new JComboBox<Curso>();
+		cmboxCursosActivos.setFont(new Font("Tahoma", Font.PLAIN, 10));
 		cmboxCursosActivos.setBounds(152, 60, 272, 20);
 		contentPane.add(cmboxCursosActivos);
 	
@@ -72,14 +76,16 @@ public class Jalumno extends JFrame {
 		});
 		
 		JButton btnRealizarTest = new JButton("Realizar test");
+		btnRealizarTest.setFont(new Font("Tahoma", Font.PLAIN, 11));
 		btnRealizarTest.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				GestionAdmin admin = new GestionAdmin();
 			    c=(Curso)cmboxCursosActivos.getSelectedItem();
-			    examen = Tools.buscarExamen(c.getNombreCurso());
-				Jexamen jvc = Jexamen.nuevaVentanaExamen(a, c, examen);
-				jvc.setVisible(true);
-				
+			    if (c!=null) {
+				    examen = Tools.buscarExamen(c.getNombreCurso());
+					Jexamen jexa = Jexamen.nuevaVentanaExamen(a, c, examen);
+					jexa.setVisible(true);
+			    }
 			}
 		});
 		btnRealizarTest.setBounds(10, 133, 105, 23);

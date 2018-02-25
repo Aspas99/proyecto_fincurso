@@ -11,6 +11,7 @@ import javax.swing.border.EmptyBorder;
 import javax.swing.JButton;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
+import java.awt.Font;
 
 public class Jadministracion extends JFrame {
 
@@ -29,6 +30,7 @@ public class Jadministracion extends JFrame {
 		contentPane.setLayout(null);
 		
 		JButton btnAltaCursos = new JButton("Alta Cursos");
+		btnAltaCursos.setFont(new Font("Tahoma", Font.PLAIN, 11));
 		btnAltaCursos.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				Jalta jvc=Jalta.nuevaVentanaAlta();
@@ -39,13 +41,14 @@ public class Jadministracion extends JFrame {
 		contentPane.add(btnAltaCursos);
 		
 		JButton btnMatricularAlumnos = new JButton("Matricular alumnos");
+		btnMatricularAlumnos.setFont(new Font("Tahoma", Font.PLAIN, 11));
 		btnMatricularAlumnos.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				Jmatricula jvc = Jmatricula.nuevaVentanaMatricula();
 				jvc.setVisible(true);
 			}
 		});
-		btnMatricularAlumnos.setBounds(274, 132, 141, 23);
+		btnMatricularAlumnos.setBounds(239, 132, 176, 23);
 		contentPane.add(btnMatricularAlumnos);
 	}
 

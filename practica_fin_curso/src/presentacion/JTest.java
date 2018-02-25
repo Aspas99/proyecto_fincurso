@@ -48,17 +48,17 @@ public class JTest extends JFrame {
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
 		
-		//3do {
+		
 					//Se pone en el lblPregunta la pregunta correspondiente a la tabla de preguntas almacenada en bbdd ,posicion 1 a 5
 				JLabel lblPregunta = new JLabel("Pregunta numero " + (pregunta +1));
-				lblPregunta.setFont(new Font("Tahoma", Font.PLAIN, 9));
+				lblPregunta.setFont(new Font("Tahoma", Font.PLAIN, 11));
 				lblPregunta.setBounds(10, 34, 137, 14);
 				contentPane.add(lblPregunta);
 				//Se crean los radio button de las respuestas ,inicialmente con una respuesta aleatoria 
 				//y nos aseguramos que ninguna corresponde a la correcta para evitar dos opciones iguales
 				//con la respuesta 
 				JTextPane textPane = new JTextPane();
-				textPane.setFont(new Font("Tahoma", Font.PLAIN, 9));
+				textPane.setFont(new Font("Tahoma", Font.PLAIN, 11));
 				textPane.setBounds(157, 11, 277, 65);
 				contentPane.add(textPane);
 				System.out.println("La pregunta "+ pregunta + "es" +e.getPreguntas()[pregunta]);
@@ -70,49 +70,34 @@ public class JTest extends JFrame {
 				//Aqui marcamos las 5 posibles respuestas 
 				
 				JRadioButton rdbtnRespuesta1 = new JRadioButton(r.getRespuestas()[respuesta[0]]);
-				rdbtnRespuesta1.setFont(new Font("Tahoma", Font.PLAIN, 9));
+				rdbtnRespuesta1.setFont(new Font("Tahoma", Font.PLAIN, 11));
 				rdbtnRespuesta1.setBounds(10, 86, 148, 23);
 				contentPane.add(rdbtnRespuesta1);
 				
 				JRadioButton rdbtnRespuesta2 = new JRadioButton(r.getRespuestas()[respuesta[1]]);
-				rdbtnRespuesta2.setFont(new Font("Tahoma", Font.PLAIN, 9));
+				rdbtnRespuesta2.setFont(new Font("Tahoma", Font.PLAIN, 11));
 				rdbtnRespuesta2.setBounds(10, 112, 148, 23);
 				contentPane.add(rdbtnRespuesta2);
 				
 				JRadioButton rdbtnRespuesta3 = new JRadioButton(r.getRespuestas()[respuesta[2]]);
-				rdbtnRespuesta3.setFont(new Font("Tahoma", Font.PLAIN, 9));
+				rdbtnRespuesta3.setFont(new Font("Tahoma", Font.PLAIN, 11));
 				rdbtnRespuesta3.setBounds(10, 138, 148, 23);
 				contentPane.add(rdbtnRespuesta3);
 				
 				JRadioButton rdbtnRespuesta4 = new JRadioButton(r.getRespuestas()[respuesta[3]]);
-				rdbtnRespuesta4.setFont(new Font("Tahoma", Font.PLAIN, 9));
+				rdbtnRespuesta4.setFont(new Font("Tahoma", Font.PLAIN, 11));
 				rdbtnRespuesta4.setBounds(10, 164, 148, 23);
 				contentPane.add(rdbtnRespuesta4);
 				
 				JRadioButton rdbtnRespuesta5 = new JRadioButton(r.getRespuestas()[respuesta[4]]);
-				rdbtnRespuesta5.setFont(new Font("Tahoma", Font.PLAIN, 9));
+				rdbtnRespuesta5.setFont(new Font("Tahoma", Font.PLAIN, 11));
 				rdbtnRespuesta5.setBounds(10, 190, 148, 23);
 				contentPane.add(rdbtnRespuesta5);
 				respuestaok=(int)( Math.floor(Math.random()*5+1));
 				
-				/*
-				switch (respuestaok) {
-				case 1:rdbtnRespuesta1.setText(r.getRespuestas()[pregunta]);
-					break;
-				case 2:rdbtnRespuesta2.setText(r.getRespuestas()[pregunta]);
-					break;
-				case 3:rdbtnRespuesta3.setText(r.getRespuestas()[pregunta]);
-					break;
-				case 4:rdbtnRespuesta4.setText(r.getRespuestas()[pregunta]);
-					break;
-				case 5:rdbtnRespuesta5.setText(r.getRespuestas()[pregunta]);
-					break;
-				}*/
-				
-				
-				//}
+
 				JButton btnSiguiente = new JButton("Siguiente pregunta");
-				btnSiguiente.setFont(new Font("Tahoma", Font.PLAIN, 9));
+				btnSiguiente.setFont(new Font("Tahoma", Font.PLAIN, 11));
 				btnSiguiente.addActionListener(new ActionListener() {
 					public void actionPerformed(ActionEvent arg0) {
  int marcado= rdbtnRespuesta1.isSelected()?0:rdbtnRespuesta2.isSelected()?1:rdbtnRespuesta3.isSelected()?2:rdbtnRespuesta4.isSelected()?3:rdbtnRespuesta5.isSelected()?5:0;
@@ -144,13 +129,11 @@ public class JTest extends JFrame {
 							
 						}else {
 							e.setRespuestas(respuestasExamen);
-							JLabel lblNota = new JLabel("");
-							lblNota.setBounds(234, 194, 190, 14);
+							
 							galumno = new GestionAlumno();
-							lblNota.setText("La nota que ha conseguido en el examen es :" + galumno.evaluarTest(a, c, e));
-							contentPane.add(lblNota);
+						    JNotas jnotas =  JNotas.nuevaVentanaNotas(galumno.evaluarTest(a, c, e));		
 							btnSiguiente.setEnabled(false);
-							lblNota.setVisible(true);
+							jnotas.setVisible(true);
 							jvc.dispose();
 						}
 					}

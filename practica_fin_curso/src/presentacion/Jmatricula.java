@@ -18,6 +18,7 @@ import beans.Curso;
 import modelo.GestionAdmin;
 import presentacion.adaptadores.AdaptadorListaComboCursos;
 import utilidades.Tools;
+import java.awt.Font;
 
 public class Jmatricula extends JFrame {
     private static Jmatricula jvc;
@@ -42,33 +43,40 @@ public class Jmatricula extends JFrame {
 		contentPane.setLayout(null);
 		
 		JLabel lblDni = new JLabel("DNI");
+		lblDni.setFont(new Font("Tahoma", Font.PLAIN, 11));
 		lblDni.setBounds(10, 11, 74, 14);
 		contentPane.add(lblDni);
 		
 		txtDni = new JTextField();
+		txtDni.setFont(new Font("Tahoma", Font.PLAIN, 9));
 		txtDni.setBounds(10, 28, 86, 20);
 		contentPane.add(txtDni);
 		txtDni.setColumns(10);
 		
 		JLabel lblNombreAlumno = new JLabel("Nombre Alumno");
+		lblNombreAlumno.setFont(new Font("Tahoma", Font.PLAIN, 11));
 		lblNombreAlumno.setBounds(204, 11, 86, 14);
 		contentPane.add(lblNombreAlumno);
 		
 		txtNombreAlumno = new JTextField();
+		txtNombreAlumno.setFont(new Font("Tahoma", Font.PLAIN, 9));
 		txtNombreAlumno.setBounds(199, 28, 162, 20);
 		contentPane.add(txtNombreAlumno);
 		txtNombreAlumno.setColumns(10);
 		
 		JLabel lblTelefono = new JLabel("Telefono");
+		lblTelefono.setFont(new Font("Tahoma", Font.PLAIN, 11));
 		lblTelefono.setBounds(10, 84, 46, 14);
 		contentPane.add(lblTelefono);
 		
 		txtTelefono = new JTextField();
-		txtTelefono.setBounds(70, 81, 123, 20);
+		txtTelefono.setFont(new Font("Tahoma", Font.PLAIN, 9));
+		txtTelefono.setBounds(101, 82, 123, 20);
 		contentPane.add(txtTelefono);
 		txtTelefono.setColumns(10);
 		
 		JLabel lblNombreCurso = new JLabel("Nombre Curso");
+		lblNombreCurso.setFont(new Font("Tahoma", Font.PLAIN, 11));
 		lblNombreCurso.setBounds(10, 124, 86, 14);
 		contentPane.add(lblNombreCurso);
 		
@@ -89,7 +97,8 @@ public class Jmatricula extends JFrame {
 		});
 		
 		JComboBox <Curso>cmboxCursos = new JComboBox();	
-		cmboxCursos.setBounds(121, 121, 254, 20);
+		cmboxCursos.setFont(new Font("Tahoma", Font.PLAIN, 9));
+		cmboxCursos.setBounds(151, 121, 254, 20);
 		contentPane.add(cmboxCursos);
 		cmboxCursos.addFocusListener(new FocusAdapter() {
 			@Override
@@ -101,6 +110,7 @@ public class Jmatricula extends JFrame {
 		});
 		
 		JButton btnGuardarMatricula = new JButton("Guardar Matricula");
+		btnGuardarMatricula.setFont(new Font("Tahoma", Font.PLAIN, 11));
 		btnGuardarMatricula.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				GestionAdmin admin = new GestionAdmin();
@@ -114,7 +124,7 @@ public class Jmatricula extends JFrame {
 				}
 			}
 		});
-		btnGuardarMatricula.setBounds(173, 176, 117, 23);
+		btnGuardarMatricula.setBounds(173, 189, 146, 23);
 		contentPane.add(btnGuardarMatricula);
 		
 		

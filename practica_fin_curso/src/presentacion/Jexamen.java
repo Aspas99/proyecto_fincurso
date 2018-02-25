@@ -57,7 +57,11 @@ public class Jexamen extends JFrame {
 			btnComenzarTest.setBounds(202, 205, 116, 23);
 			contentPane.add(btnComenzarTest);
 		}else {
-			txtMensajeTest.setText("Este curso ya ha sido evaluado con nota:" + galumno.buscarEvaluacion(a.getDni(), c.getNombreCurso()).getNota());
+			galumno = new GestionAlumno();
+		    JNotas jnotas =  JNotas.nuevaVentanaNotas(galumno.buscarEvaluacion(a.getDni(), c.getNombreCurso()).getNota());	
+			jnotas.setVisible(true);
+			jvc.dispose();
+			//txtMensajeTest.setText("Este curso ya ha sido evaluado con nota:" + galumno.buscarEvaluacion(a.getDni(), c.getNombreCurso()).getNota());
 		}
 		txtMensajeTest.setBounds(64, 28, 299, 133);
 		contentPane.add(txtMensajeTest);

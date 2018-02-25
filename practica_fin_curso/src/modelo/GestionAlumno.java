@@ -101,10 +101,9 @@ public class GestionAlumno {
     	Alumno a=Tools.buscarAlumno(dni);
     	if (a!=null) {
 	    	try (Connection cn=DriverManager.getConnection("jdbc:mysql://localhost:3306/academias", "root", "root")){
-	    		String sql="select m.dniAlumno,c.nombreCurso,fechainicio,fechaFin,nota from" + 
-	    				" curso c  join (matriculas m )" + 
-	    				" on  (m.nombreCurso=c.nombreCurso and m.dniAlumno=?) left join " + 
-	    				" evaluacion e on  e.dni=?";
+	    		String sql="select distinct m.dniAlumno,c.nombreCurso,fechainicio,fechaFin,nota from" + 
+	    				" (curso c, matriculas m, evaluacion e)" + 
+	    				" where (m.nombreCurso=c.nombreCurso and m.dniAlumno=? and  e.dni=?)";
 				PreparedStatement ps = cn.prepareStatement(sql);
 				ps.setInt(1,dni);
 				ps.setInt(2,dni);
