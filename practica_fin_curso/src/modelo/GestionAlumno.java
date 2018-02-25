@@ -21,29 +21,30 @@ public class GestionAlumno {
 	
 	public int evaluarTest(Alumno a , Curso c, Examen e) {
 		int nota=0;
-		Examen examen=Tools.buscarExamen(c.getNombreCurso());
 		Respuesta resp=Tools.buscarRespuestas(c.getNombreCurso()) ;
+		Evaluacion el = buscarEvaluacion(a.getDni(),c.getNombreCurso());
+		if (el==null) {
 		
-		for (int i=0; i<examen.getPreguntas().length; i++) {
-			if (examen.getRespuestas()[i].equals(resp.getRespuestas()[i])) {
-				nota++;
-		    }
-		}
-		
-		try (Connection cn=DriverManager.getConnection("jdbc:mysql://localhost:3306/academias", "root", "root"))
-		{
-			//consultas preparadas. Inserta un registro en la tabla de evaluaciones
+			for (int i=0; i<e.getPreguntas().length; i++) {
+				if (e.getRespuestas()[i].equals(resp.getRespuestas()[i])) {
+					nota++;
+			    }
+			}
 			
-			String sql="Insert into Evaluacion(dni,idCurso,nota) values(?,?,?)";
-			PreparedStatement ps = cn.prepareStatement(sql);
-			ps.setInt(1,a.getDni());
-			ps.setInt(2,c.getIdCurso());
-			ps.setInt(3, nota);
-			ps.execute();
-		}catch(SQLException ex) {
-			ex.printStackTrace();
-		}
-		
+			try (Connection cn=DriverManager.getConnection("jdbc:mysql://localhost:3306/academias", "root", "root"))
+			{
+				//consultas preparadas. Inserta un registro en la tabla de evaluaciones
+				
+				String sql="Insert into Evaluacion(dni,idCurso,nota) values(?,?,?)";
+				PreparedStatement ps = cn.prepareStatement(sql);
+				ps.setInt(1,a.getDni());
+				ps.setInt(2,c.getIdCurso());
+				ps.setInt(3, nota);
+				ps.execute();
+			}catch(SQLException ex) {
+				ex.printStackTrace();
+			}
+		}else nota=el.getNota();
 		return nota;
 		
 	}
@@ -55,16 +56,16 @@ public class GestionAlumno {
 		try (Connection cn=DriverManager.getConnection("jdbc:mysql://localhost:3306/academias", "root", "root"))
 		{
 			
-			String sql="select * from Evaluacion where nombreCurso=? and dni=?";
+			String sql="select * from Evaluacion where idCurso=? and dni=?";
 			
 			PreparedStatement ps = cn.prepareStatement(sql);
-			ps.setString(1,nombreCurso);
+			ps.setInt(1,c.getIdCurso());
 			ps.setInt(2,dni);
 			
 			ResultSet rs=ps.executeQuery();
 			//No necesitamos converison de fechas sql a util.date ya que hay asignacion directa por herdar sql de date.
 			while (rs.next()) {
-				e=new Evaluacion(rs.getInt("dni"),rs.getInt(c.getNombreCurso()),rs.getInt("nota"));
+				e=new Evaluacion(rs.getInt("dni"),rs.getInt(c.getIdCurso()),rs.getInt("nota"));
 			}
 						
 		}catch(SQLException ex) {
@@ -100,10 +101,10 @@ public class GestionAlumno {
     	Alumno a=Tools.buscarAlumno(dni);
     	if (a!=null) {
 	    	try (Connection cn=DriverManager.getConnection("jdbc:mysql://localhost:3306/academias", "root", "root")){
-	    		String sql="select m.dniAlumno,c.nombreCurso,fechainicio,fechaFin,e.nota from" + 
-	    				" curso c left join (matriculas m  , evaluacion e)" + 
-	    				" on  (m.nombreCurso=c.nombreCurso and c.idCurso=e.idCurso and m.dniAlumno=?" + 
-	    				" and e.dni=?)";
+	    		String sql="select m.dniAlumno,c.nombreCurso,fechainicio,fechaFin,nota from" + 
+	    				" curso c  join (matriculas m )" + 
+	    				" on  (m.nombreCurso=c.nombreCurso and m.dniAlumno=?) left join " + 
+	    				" evaluacion e on  e.dni=?";
 				PreparedStatement ps = cn.prepareStatement(sql);
 				ps.setInt(1,dni);
 				ps.setInt(2,dni);

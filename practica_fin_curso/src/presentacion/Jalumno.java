@@ -77,8 +77,6 @@ public class Jalumno extends JFrame {
 				GestionAdmin admin = new GestionAdmin();
 			    c=(Curso)cmboxCursosActivos.getSelectedItem();
 			    examen = Tools.buscarExamen(c.getNombreCurso());
-			    System.out.println("El valor del examen seleccionado es: " + examen.getPreguntas()[0]);
-			    System.out.println("El valor del examen seleccionado es: " + examen.getPreguntas()[1]);
 				Jexamen jvc = Jexamen.nuevaVentanaExamen(a, c, examen);
 				jvc.setVisible(true);
 				
